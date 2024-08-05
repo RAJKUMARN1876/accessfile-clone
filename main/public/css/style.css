@@ -1,0 +1,296 @@
+/* style.css */
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar {
+  /*background-color: #292929; */
+  background-color: transparent;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  
+}
+ h2{
+   color:black;
+ }
+
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar ul li {
+  display: inline;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+  color: #007bff;
+}
+
+#app {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: white;
+}
+
+.form-container {
+  margin-bottom: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="file"],
+button {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="file"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+button {
+  background-color: #292929;
+  color: white;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.hidden {
+  display: none;
+}
+
+#roomDetails {
+  text-align: center;
+}
+
+#roomNameDisplay {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #292929;
+}
+
+#filesList {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+#filesList li {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ccc;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #292929;
+  color: white;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+footer a {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  margin-top: 0.5rem;
+}
+
+.social-icons a {
+  color: white;
+  margin: 0 0.5rem;
+  font-size: 1.25rem;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+  color: #007bff;
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
+  .navbar h1 {
+    font-size: 1.25rem;
+  }
+
+  #app {
+    margin: 1rem auto;
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="file"],
+  button {
+    font-size: 0.875rem;
+  }
+
+  #roomNameDisplay {
+    font-size: 1.25rem;
+  }
+}
+
+/* changes 
+
+#app {
+  display: flex;
+}
+
+#roomDetails {
+  margin: 1em;
+}
+
+#filesList {
+  list-style: none;
+  padding: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 1em;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.sidebar {
+  width: 350px;
+  background-color: #f4f4f4;
+  padding: 1em;
+  border-left: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+#fileRequestsList {
+  list-style: none;
+  padding: 0;
+}
+
+#fileRequestsList li {
+  padding: 0.5em;
+  border-bottom: 1px solid #ccc;
+}
+
+.comment-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
+}
+
+.comment-box textarea {
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.comment-box button {
+  align-self: flex-end;
+  padding: 0.5em 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-box button:hover {
+  background-color: #0056b3;
+}
+
+#commentsList li {
+  padding: 0.5em;
+  border-bottom: 1px solid #ccc;
+}*/

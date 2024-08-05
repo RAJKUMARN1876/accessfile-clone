@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Accesoframe</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body{
+            background-image: url("light.jpg");
+            background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+        }
+        #chat {
+            height: 60vh;
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        h1{
+            color: aliceblue;
+        }
+        #message{
+            background-color: rgba(0, 0, 0, 0.3);
+            color: aliceblue;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col items-center justify-center h-screen bg-gray-100 text-gray-800">
+    <h1 class="text-3xl font-bold mb-4">
+        Accesoframe
+        Chat with others - group chat</h1>
+    <div id="chat" class="w-full max-w-md bg-white border border-gray-300 rounded-lg p-4 mb-4 shadow-md"></div>
+    <div class="w-full max-w-md flex">
+        <input type="text" id="message" class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type your message...">
+        <button id="send" class="bg-blue-500 text-white p-2 rounded-r-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const randomUserId = 'User' + Math.floor(Math.random() * 1000);
+
+        document.getElementById('send').onclick = function() {
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value;
+            if (message.trim() !== '') {
+                socket.emit('chatMessage', { room: 'default', user: randomUserId, message });
+                messageInput.value = '';
+            }
+        };
+
+        socket.on('message', function({ user, message }) {
+            const chat = document.getElementById('chat');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${user}: ${message}`;
+            messageElement.className = "p-2 mb-2 bg-gray-200 rounded-lg";
+            chat.appendChild(messageElement);
+        });
+
+        // Join a default room
+        socket.emit('joinRoom', 'default');
+    </script>
+</body>
+
+</html>

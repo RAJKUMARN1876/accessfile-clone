@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Room Names</title>
+  </head>
+  <body>
+    <h1>Room Names</h1>
+    <ul id="room-list"></ul>
+
+    <script>
+      fetch("/roomslist")
+        .then((response) => response.json())
+        .then((rooms) => {
+          const roomList = document.getElementById("room-list");
+          rooms.forEach((room) => {
+            const li = document.createElement("li");
+            li.textContent = room.name;
+            roomList.appendChild(li);
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching room names:", error);
+        });
+    </script>
+  </body>
+</html>

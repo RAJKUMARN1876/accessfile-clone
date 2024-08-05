@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-adsense-account" content="ca-pub-5941910722660845">
+  <title>accesoframe</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .parallax {
+      background-image: url('https://cdn.glitch.global/0fe76a54-57d1-4a6c-b3ae-b6494dbf8816/timelapse.jpg?v=1722673651374');
+      min-height: 130px;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+
+    .parallax::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .parallax-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .transparent-bg {
+      background-color: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+    }
+
+    .transparent-nav {
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+    }
+
+    .floating-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+
+    .floating-message button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .floating-message button.try {
+      background: #007bff;
+      color: white;
+    }
+
+    .floating-message button.cancel {
+      background: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-roboto transition duration-300">
+  <div class="parallax">
+    <div class="parallax-content flex justify-center items-center h-full text-white text-4xl font-bold">
+      Accesoframe
+    </div>
+  </div>
+  <nav class="transparent-nav text-white py-4 shadow-md transition duration-300 flex justify-between items-center">
+    <h1 class="text-xl font-bold ml-4">Bagit-Portable File Access</h1>
+    <ul class="flex gap-4 mr-4">
+      <li><a href="/" class="text-white hover:text-blue-500">Home</a></li>
+      <li><a href="reqfile.html" class="text-white hover:text-blue-500">Request file</a></li>
+      <li><a href="chat.html" class="text-white hover:text-blue-500">Chat with others</a></li>
+    </ul>
+  </nav>
+  <h2 class="text-black text-center mt-4">Hi this is Jothi, developer of this website. Use this website for good manner, enjoy thank you!</h2>
+  <div id="app" class="max-w-2xl mx-auto p-4 transparent-bg shadow-lg rounded-lg mt-8">
+    <div class="flex justify-center mb-8">
+      <button id="toggleCreate" class="p-2 bg-gray-900 text-white rounded hover:bg-blue-700 mx-2">Create Room</button>
+      <button id="toggleJoin" class="p-2 bg-gray-900 text-white rounded hover:bg-blue-700 mx-2">Join Room</button>
+    </div>
+    <div id="createRoomSection" class="form-container mb-8">
+      <h1 class="text-2xl font-bold text-center mb-4">Create Room</h1>
+      <form id="createRoomForm" class="flex flex-col">
+        <input type="text" id="roomName" placeholder="Room Name" required class="p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500" />
+        <input type="password" id="roomPassword" placeholder="Password" required class="p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500" />
+        <button type="submit" class="p-2 bg-gray-900 text-white rounded hover:bg-blue-700 transition-transform transform hover:scale-105">Create Room</button>
+      </form>
+    </div>
+    <div id="joinRoomSection" class="form-container mb-8 hidden">
+      <h1 class="text-2xl font-bold text-center mb-4">Join Room</h1>
+      <form id="joinRoomForm" class="flex flex-col">
+        <input type="text" id="joinRoomName" placeholder="Room Name" required class="p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500" />
+        <input type="password" id="joinRoomPassword" placeholder="Password" required class="p-2 mb-4 border border-gray-300 rounded focus:outline-none focus:border-blue-500" />
+        <button type="submit" class="p-2 bg-gray-900 text-white rounded hover:bg-blue-700 transition-transform transform hover:scale-105">Join Room</button>
+      </form>
+    </div>
+    <div id="roomDetails" class="hidden text-center">
+      <h2 id="roomNameDisplay" class="text-xl font-bold mb-4 text-gray-900"></h2>
+      <form id="uploadForm" class="flex flex-col">
+        <input type="file" id="fileInput" required class="p-2 mb-4 border border-gray-300 rounded" />
+        <button type="submit" class="p-2 bg-gray-900 text-white rounded hover:bg-blue-700 transition-transform transform hover:scale-105">Upload File</button>
+      </form>
+      <ul id="filesList" class="list-none text-left"></ul>
+    </div>
+    <div id="sidebar" class="sidebar mt-8">
+      <h3 class="text-lg font-bold mb-4">File Requests</h3>
+      <ul id="fileRequestsList" class="list-none">
+        <!-- File request items will be dynamically added here -->
+      </ul>
+    </div>
+  </div>
+  <footer class="transparent-nav text-white py-4 text-center mt-8">
+    <a href="#" class="block">&copy; 2024 Accesoframe. All rights reserved.</a>
+    <a href="#" class="block">Privacy and Policy</a>
+    <a href="#" class="block">Terms of Condition</a>
+    <div class="flex justify-center mt-2">
+      <a href="https://x.com/AccesoFrame" target="_blank" class="text-white mx-2 text-2xl hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+      <a href="www.linkedin.com/in/jothiprakasam001" target="_blank" class="text-white mx-2 text-2xl hover:text-blue-500"><i class="fab fa-linkedin"></i></a>
+      <a href="//www.instagram.com/jothiprakash_10" target="_blank" class="text-white mx-2 text-2xl hover:text-blue-500"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+  <script src="js/index.js"></script>
+  <script>
+    document.getElementById('toggleCreate').addEventListener('click', function() {
+      document.getElementById('createRoomSection').classList.remove('hidden');
+      document.getElementById('joinRoomSection').classList.add('hidden');
+    });
+
+    document.getElementById('toggleJoin').addEventListener('click', function() {
+      document.getElementById('createRoomSection').classList.add('hidden');
+      document.getElementById('joinRoomSection').classList.remove('hidden');
+    });
+
+    // Function to show floating message
+    function showFloatingMessage() {
+      const message = document.createElement('div');
+      message.className = 'floating-message';
+      message.innerHTML = `
+        <span>Would you like to <a href="chat.html" class="text-blue-500 underline">chat with others</a>?</span>
+        <button class="try">Try</button>
+        <button class="cancel">Cancel</button>
+      `;
+
+      document.body.appendChild(message);
+
+      message.querySelector('.try').addEventListener('click', () => {
+        window.location.href = 'chat.html';
+      });
+
+      message.querySelector('.cancel').addEventListener('click', () => {
+        document.body.removeChild(message);
+      });
+    }
+
+    // Show the floating message when the page loads
+    window.addEventListener('load', showFloatingMessage);
+  </script>
+</body>
+
+</html>
